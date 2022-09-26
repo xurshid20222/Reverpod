@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final valueProvider = Provider<int>((ref){
-  return 76;
+final counterStateProvider = StateProvider<int>((ref){
+  return 0;
 });
 
 class HomePage extends ConsumerWidget {
@@ -10,14 +10,20 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final value = ref.watch(valueProvider);
+    final counter = ref.watch(counterStateProvider);
     return Scaffold(
       body: Center(
         child: Text(
-          'Value: $value',
+          'Value: $counter',
           style: Theme.of(context).textTheme.headline4,
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => ref.read(counterStateProvider.notifier).state++,
+        child: const Icon(Icons.add),
       ),
     );
   }
 }
+
+
